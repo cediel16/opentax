@@ -1,7 +1,9 @@
-html,
-body{
+html *,
+body *{
     color: #333333;
+    font-size:12px;
 }
+
 .banner{
     padding:5px 20px 5px 20px;
     font-size:12px;
@@ -20,10 +22,37 @@ body{
     border-bottom:1px solid #D4D4D4;
     padding:5px 10px 5px 10px;
     font-weight: bold;
-
+    font-size: 14px;
 }
 
 .main-content{
     padding:5px 10px 5px 10px;
     min-height: 300px;
+}
+
+.table-thead-center thead th{
+    text-align:center;
+}
+
+.text-center{
+    text-align:center;
+}
+
+.form-legend{
+    border-bottom:1px solid #CCCCCC;
+    margin-bottom:20px; 
+    border-image: none;
+    border-style: none none solid;
+    border-width: 0 0 1px;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    line-height: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.form-search-pagination{
+    padding:0px;
+    margin-bottom:6px;
 }

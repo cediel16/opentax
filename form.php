@@ -2,16 +2,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="assets/css/style.css" rel="stylesheet">
         <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/bootstrap-responsive.css" rel="stylesheet"> 
-        <link href="assets/css/style.css" rel="stylesheet">
         <title></title>
     </head>
     <body>
         <header>
             <div class="navbar navbar-fixed-top">
                 <div class="container-fluid banner">
-                    <div class="row-fluidd">
+                    <div class="row-fluid">
                         <div class="pull-left">
                             12 de enero de 2013
                         </div>
@@ -77,7 +77,7 @@
                 Registro de...
             </div>
             <div class="main-content">
-                <legend>INFORMACIÓN OTORGADA POR LA DIRECCIÓN DE HACIENDA </legend>
+                <div class="form-legend">Información otorgada por la Dirección de Hacienda</div>
                 <div class="row-fluid">
                     <div class="span12">
                         <div class="row-fluid">   
@@ -99,7 +99,7 @@
                     </div><!--/span-->
                 </div><!--/row-->
                 <hr>
-                <legend>DATOS DEL FONDO DE COMERCIO </legend>
+                <div class="form-legend">Datos del Fondo de Comercio</div>
                 <div class="row-fluid">
                     <div class="span12">
                         <div class="row-fluid">   
@@ -151,24 +151,58 @@
                             </div><!--/span-->
                         </div><!--/row-->
                         <div class="row-fluid">
-                            <div class="span4 lightblue">
-                                Datos del ejercicio económico 
-                            </div><!--/span-->
-                            <div class="span4 lightblue">
-                                <label>Fecha de inicio</label>
+                            <div class="span6 lightblue">
+                                <label>Fecha de inicio para el ejercicio económico</label>
                                 <input type="text" class="span12" />
                             </div><!--/span-->
-                            <div class="span4 lightblue">
-                                <label>Fecha de cierre</label>
+                            <div class="span6 lightblue">
+                                <label>Fecha de cierre para el ejercicio económico</label>
                                 <input type="text" class="span12" />
                             </div><!--/span-->
                         </div><!--/row-->
                     </div><!--/span-->
                 </div><!--/row-->
-                <legend>ACTIVIDADES ECONÓMICAS</legend>
+                <div class="form-legend" >Actividades Económicas</div>
                 <div class="row-fluid">
+                    <table class="table table-condensed table-hover table-bordered table-thead-center">
+                        <thead>
+                            <tr>
+                                <th class="span1"><a href="javascript:void(0);"><i class="icon-plus-sign"></i></a></th>
+                                <th class="span2">Código</th>
+                                <th>Descripción de la actividad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="span1" style="text-align: center;"><a href="javascript:void(0);"><i class="icon-minus-sign"></i></a></td>
+                                <td class="span2" style="text-align: center;">054114</td>
+                                <td>Descripción de la actividad</td>
+                            </tr>
+                            <tr>
+                                <td class="span1" style="text-align: center;"><a href="javascript:void(0);"><i class="icon-minus-sign"></i></a></td>
+                                <td class="span2" style="text-align: center;">054114</td>
+                                <td>Descripción de la actividad</td>
+                            </tr>
+                            <tr>
+                                <td class="span1" style="text-align: center;"><a href="javascript:void(0);"><i class="icon-minus-sign"></i></a></td>
+                                <td class="span2" style="text-align: center;">054114</td>
+                                <td>Descripción de la actividad</td>
+                            </tr>
+                            <tr>
+                                <td class="span1" style="text-align: center;"><a href="javascript:void(0);"><i class="icon-minus-sign"></i></a></td>
+                                <td class="span2" style="text-align: center;">054114</td>
+                                <td>Descripción de la actividad</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div><!--/row-->
-                <hr>
+            </div>
+            <div class="form-actions text-center">
+                <button type="submit" class="btn">Cancelar</button>
+                <button type="submit" class="btn">Limpiar</button>
+                <button type="button" class="btn">Aceptar</button>
             </div>
         </section>
 

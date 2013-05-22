@@ -11,7 +11,7 @@
         <header>
             <div class="navbar navbar-fixed-top">
                 <div class="container-fluid banner">
-                    <div class="row-fluidd">
+                    <div class="row-fluid">
                         <div class="pull-left">
                             12 de enero de 2013
                         </div>
@@ -74,17 +74,47 @@
         </header>
         <section class="container main-container">
             <div class="main-title">
-                Titulo
+                Paginado
             </div>
             <div class="main-content">
-                <div class="row-fluid">
-                    <div class="span3 well well-small">
-                        barside                        
-                    </div>
-                    <div class="span9 well well-small">
-                        content
-                    </div>
-                </div>           
+                <div class="input-prepend pull-right">
+                    <button class="btn" type="button">Buscar</button>
+                    <input class="span3" id="prependedInputButton" type="text">
+                </div>
+                <table class="table table-bordered table-condensed table-hover table-thead-center">
+                    <thead>
+                        <tr>
+                            <th class="span1">N</th>
+                            <th class="span1">patente</th>
+                            <th class="span1">RIF</th>
+                            <th class="span4">Razón Social</th>
+                            <th>Domicilio Fiscal</th>
+                            <th class="span2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align:center;">99</td>
+                            <td style="text-align:center;">99999999</td>
+                            <td style="text-align:center;">X999999999</td>
+                            <td>XXX XXXXXXXX XXXXX XXXXXXX</td>
+                            <td>XXXXXXXXXXXXXXXXXX XXXXXXXXXXXXX XXXXXXX XXXXXXXXXX</td>
+                            <td style="text-align:center;">XXXXXXXX</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pagination pagination-right">
+                    <ul>
+                        <li class="disabled"><a href="#">«</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                    <div class="pull-left">Mostrando 9 de 99 registros asd asdas dasd </div>
+                </div>
             </div>
         </section>
         <footer>
