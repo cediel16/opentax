@@ -12,16 +12,31 @@ class Template {
     }
 
     /*
-    function load($template = '', $view = '', $view_data = array(), $return = FALSE) {
-        $this->CI = & get_instance();
-        $this->set('content', $this->CI->load->view($view, $view_data, TRUE));
-        
-        return $this->CI->load->view('templates/'.$template, $this->template_data, $return);
-    }
+      function load($template = '', $view = '', $view_data = array(), $return = FALSE) {
+      $this->CI = & get_instance();
+      $this->set('content', $this->CI->load->view($view, $view_data, TRUE));
+
+      return $this->CI->load->view('templates/'.$template, $this->template_data, $return);
+      }
      * 
      */
+
     function load($template = '', $view = '', $view_data = array(), $return = FALSE) {
-        return $this->CI->load('base');
+        $this->CI = & get_instance();
+        /*
+          $d['title'] = $view_data['title'];
+          $d['template'] = $this->CI->load->view('templates/' . $template, array(
+          'content' => $this->CI->load->view()
+          ), TRUE);
+          $d['script'] = $view_data['script'];
+         */
+        return $this->CI->load->view('base', array(
+                    'title' => $view_data['title'],
+                    'script' => $view_data['script'],
+                    'template' => $this->CI->load->view('templates/' . $template, array(
+                        'content' => $this->CI->load->view($view, $view_data, TRUE)
+                            ), TRUE)
+                ));
     }
 
 }

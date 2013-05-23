@@ -20,10 +20,14 @@ class Main extends MY_Controller {
      * map to /index.php/welcome/<method_name>
      * @see http://codeigniter.com/user_guide/general/urls.html
      */
+    function __construct() {
+        parent::__construct();
+    }
+
     public function index() {
-        $this->template->load('basic');
-        //$this->load->view('base');
-        //$this->load->tpl('single', 'inicio', array('title' => 'Bienvenido '));
+        $this->data['title'] = 'asd';
+        $this->data['content'] = 'template';
+        $this->template->load('basic', 'main/inicio', $this->data);
     }
 
     public function login() {

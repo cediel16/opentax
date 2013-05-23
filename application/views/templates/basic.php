@@ -1,1 +1,1 @@
-basic
+<?php echo $content ?>

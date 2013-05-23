@@ -18,7 +18,7 @@ class contribuyentes extends MY_Controller {
 
     public function registro() {
         $this->data['title'] = 'Registro de nuevo contribuyente';
-        $this->load->tpl('single', 'contribuyentes/registro', $this->data);
+        $this->template->load('basic', 'contribuyentes/registro', $this->data);
     }
 
 }

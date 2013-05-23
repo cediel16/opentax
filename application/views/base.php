@@ -103,7 +103,7 @@
                 <?php echo $title ?>
             </div>
             <div class="main-content">
-                <?php echo $content ?>
+                <?php echo $template ?>
             </div>
         </section>
         <footer>

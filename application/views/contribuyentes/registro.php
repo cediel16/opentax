@@ -23,15 +23,15 @@
         <div class="row-fluid">
             <div class="span4 lightblue">
                 <label>Estado</label>
-                <select class="span12"></select>
+                <?php echo form_dropdown_estados('estado', 'class="span12"') ?>
             </div><!--/span-->
             <div class="span4 lightblue">
                 <label>Municipio</label>
-                <select class="span12"></select>
+                <?php echo form_dropdown_municipios('municipio', 'class="span12"', 7) ?>
             </div><!--/span-->
             <div class="span4 lightblue">
                 <label>Parroquia</label>
-                <select class="span12"></select>
+                <?php echo form_dropdown_parroquias('parroquia', 'class="span12"', 7) ?>
             </div><!--/span-->
         </div><!--/row-->
         <div class="row-fluid">
