@@ -2,9 +2,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <?php echo link_tag("assets/css/style.css") ?>
         <?php echo link_tag("assets/css/bootstrap.css") ?>
         <?php echo link_tag("assets/css/bootstrap-responsive.css") ?>
-        <?php echo link_tag("assets/css/style.css") ?>
         <title>Opentax</title>
     </head>
     <body>

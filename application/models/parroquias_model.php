@@ -13,14 +13,17 @@ class Parroquias_model extends MY_Model {
     //put your code here
 
     function select_parroquias($municipio_id) {
-        $r = array('' => '');
-        $this->db->where('municipio_fkey', $municipio_id);
-        $rst = $this->db->get('parroquias');
-        if ($rst->num_rows > 0) {
-            foreach ($rst->result() as $row) {
-                $r[$row->id] = $row->parroquia;
+        if (is_numeric($municipio_id)) {
+            $this->db->where('municipio_fkey', $municipio_id);
+            $this->db->order_by('parroquia');
+            $rst = $this->db->get('parroquias');
+            $r = array('' => '');
+            if ($rst->num_rows > 0) {
+                foreach ($rst->result() as $row) {
+                    $r[$row->id] = $row->parroquia;
+                }
+                return $r;
             }
-            return $r;
         }
         return NULL;
     }

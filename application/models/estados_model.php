@@ -14,6 +14,7 @@ class Estados_model extends MY_Model {
 
     function select_estados() {
         $r = array(''=>'');
+        $this->db->order_by('estado');
         $rst = $this->db->get('estados');
         if ($rst->num_rows > 0) {
             foreach ($rst->result() as $row) {

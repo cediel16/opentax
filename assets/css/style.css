@@ -56,3 +56,12 @@ body *{
     padding:0px;
     margin-bottom:6px;
 }
+
+.content-table-scroll{
+    border:1px solid #cccccc;
+    height: 340px;
+    overflow:scroll;
+    padding:10px;
+    border-radius: 4px;
+    
+}
