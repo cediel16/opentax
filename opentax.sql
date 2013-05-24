@@ -29,6 +29,45 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: contribuyentes; Type: TABLE; Schema: public; Owner: johel; Tablespace: 
+--
+
+CREATE TABLE contribuyentes (
+    id integer NOT NULL,
+    cirif character varying(15) NOT NULL,
+    nombre text NOT NULL,
+    direccion text NOT NULL,
+    parroquia_fkey integer NOT NULL,
+    email character varying(50) NOT NULL,
+    telefono1 character varying(20) NOT NULL,
+    telefono2 character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.contribuyentes OWNER TO johel;
+
+--
+-- Name: contribuyentes_id_seq; Type: SEQUENCE; Schema: public; Owner: johel
+--
+
+CREATE SEQUENCE contribuyentes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.contribuyentes_id_seq OWNER TO johel;
+
+--
+-- Name: contribuyentes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: johel
+--
+
+ALTER SEQUENCE contribuyentes_id_seq OWNED BY contribuyentes.id;
+
+
+--
 -- Name: estados; Type: TABLE; Schema: public; Owner: johel; Tablespace: 
 --
 
@@ -133,6 +172,13 @@ ALTER SEQUENCE parroquias_id_seq OWNED BY parroquias.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: johel
 --
 
+ALTER TABLE ONLY contribuyentes ALTER COLUMN id SET DEFAULT nextval('contribuyentes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: johel
+--
+
 ALTER TABLE ONLY estados ALTER COLUMN id SET DEFAULT nextval('estados_id_seq'::regclass);
 
 
@@ -148,6 +194,30 @@ ALTER TABLE ONLY municipios ALTER COLUMN id SET DEFAULT nextval('municipios_id_s
 --
 
 ALTER TABLE ONLY parroquias ALTER COLUMN id SET DEFAULT nextval('parroquias_id_seq'::regclass);
+
+
+--
+-- Data for Name: contribuyentes; Type: TABLE DATA; Schema: public; Owner: johel
+--
+
+COPY contribuyentes (id, cirif, nombre, direccion, parroquia_fkey, email, telefono1, telefono2) FROM stdin;
+1	asdasdasd	asdasd	asdasda	4	asdasd	asdasd	asd
+2	asdasdasd	asdasd	asdasda	4	asdasd	asdasd	asd
+3	dds	asdasd	asdasda	4	asdasd	asdasd	asd
+4	ddsasdadasd	asdasd	asdasda	4	asdasd	asdasd	asd
+5	ddsasdadasd	asdasd	asdasda	4	asdasd	asdasd	asd
+6	ddsasdadasd	asdasd	asdasda	4	asdasd	asdasd	asd
+7	asdas	a sdasd	asdasd	4	asdasd	asdasd	asda
+8	V017515094	Johel Alexander Cediel Teran	Flor Amarillo	9	cedielj@alcaldiadeguacara.gob.ve	02418782490	04264300086
+9	V019000650	Jolibert Carolina Cediel Teran	Araguita	9	admin@localhost.com	02418782490	04264300086
+\.
+
+
+--
+-- Name: contribuyentes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: johel
+--
+
+SELECT pg_catalog.setval('contribuyentes_id_seq', 9, true);
 
 
 --
@@ -223,6 +293,17 @@ SELECT pg_catalog.setval('municipios_id_seq', 14, true);
 --
 
 COPY parroquias (id, parroquia, municipio_fkey) FROM stdin;
+1	Bejuma	1
+2	Canoabo	1
+3	Simón Bolívar	1
+4	Güigüe	2
+5	Belén	2
+6	Tacarigua	2
+7	Aguas Calientes	3
+8	Mariara	3
+9	Guacara	4
+10	Yagua	4
+11	Ciudad Alianza	4
 \.
 
 
@@ -230,7 +311,15 @@ COPY parroquias (id, parroquia, municipio_fkey) FROM stdin;
 -- Name: parroquias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: johel
 --
 
-SELECT pg_catalog.setval('parroquias_id_seq', 1, false);
+SELECT pg_catalog.setval('parroquias_id_seq', 11, true);
+
+
+--
+-- Name: contribuyentes_pkey; Type: CONSTRAINT; Schema: public; Owner: johel; Tablespace: 
+--
+
+ALTER TABLE ONLY contribuyentes
+    ADD CONSTRAINT contribuyentes_pkey PRIMARY KEY (id);
 
 
 --
@@ -263,6 +352,14 @@ ALTER TABLE ONLY municipios
 
 ALTER TABLE ONLY parroquias
     ADD CONSTRAINT parroquias_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contribuyentes_parroquia_fkey_fkey; Type: FK CONSTRAINT; Schema: public; Owner: johel
+--
+
+ALTER TABLE ONLY contribuyentes
+    ADD CONSTRAINT contribuyentes_parroquia_fkey_fkey FOREIGN KEY (parroquia_fkey) REFERENCES parroquias(id);
 
 
 --

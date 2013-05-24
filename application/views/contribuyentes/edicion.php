@@ -3,14 +3,14 @@ $cirif = array(
     'id' => 'cirif',
     'name' => 'cirif',
     'class' => 'span12',
-    'value' => $this->input->post('cirif')
+    'value' => ($this->input->post('cirif') == '') ? $contribuyente->cirif : $this->input->post('cirif')
 );
 
 $nombre = array(
     'id' => 'nombre',
     'name' => 'nombre',
     'class' => 'span12',
-    'value' => $this->input->post('nombre')
+    'value' => ($this->input->post('nombre') == '') ? $contribuyente->nombre : $this->input->post('nombre')
 );
 
 $direccion = array(
@@ -18,7 +18,7 @@ $direccion = array(
     'name' => 'direccion',
     'class' => 'span12',
     'rows' => 2,
-    'value' => $this->input->post('direccion')
+    'value' => ($this->input->post('direccion') == '') ? $contribuyente->direccion : $this->input->post('direccion')
 );
 
 $estado = array(
@@ -46,7 +46,7 @@ $email = array(
     'id' => 'email',
     'name' => 'email',
     'class' => 'span12',
-    'value' => $this->input->post('email')
+    'value' => ($this->input->post('email') == '') ? $contribuyente->email : $this->input->post('email')
 );
 
 $telefono1 = array(
@@ -54,7 +54,7 @@ $telefono1 = array(
     'name' => 'telefono1',
     'class' => 'span12',
     'maxlength' => '11',
-    'value' => $this->input->post('telefono1')
+    'value' => ($this->input->post('telefono1') == '') ? $contribuyente->telefono1 : $this->input->post('telefono1')
 );
 
 $telefono2 = array(
@@ -62,9 +62,8 @@ $telefono2 = array(
     'name' => 'telefono2',
     'class' => 'span12',
     'maxlength' => '11',
-    'value' => $this->input->post('telefono2')
+    'value' => ($this->input->post('telefono2') == '') ? $contribuyente->telefono2 : $this->input->post('telefono2')
 );
-
 ?>
 <?php echo $this->session->flashdata('msj') ?>
 <?php echo form_open() ?>
