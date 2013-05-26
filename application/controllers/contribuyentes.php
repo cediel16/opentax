@@ -93,6 +93,12 @@ class contribuyentes extends MY_Controller {
     }
 
     public function edicion() {
+
+        $this->data['contribuyente'] = $this->Contribuyentes_model->get_contribuyente($this->uri->segment(3));
+        if ($this->data['contribuyente']==''){
+            redirect();
+        }
+
         $this->load->helper('common');
         $this->load->library('form_validation');
         $this->load->model('Contribuyentes_model');
@@ -125,7 +131,6 @@ class contribuyentes extends MY_Controller {
 
         $this->data['title'] = 'Modificación del contribuyente';
 
-        $this->data['contribuyente'] = $this->Contribuyentes_model->get_contribuyente($this->uri->segment(3));
         $this->data['options_estados'] = $this->Estados_model->select_estados();
         $this->data['options_municipios'] = (is_array($this->Municipios_model->select_municipios($this->input->post('estado')))) ? $this->Municipios_model->select_municipios($this->input->post('estado')) : array();
         $this->data['options_parroquias'] = (is_array($this->Parroquias_model->select_parroquias($this->input->post('municipio')))) ? $this->Parroquias_model->select_parroquias($this->input->post('municipio')) : array();

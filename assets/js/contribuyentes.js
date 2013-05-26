@@ -2,7 +2,7 @@ $(document).ready(function() {
     $("#estado").change(function() {
         $.ajax({
             type: "POST",
-            url: 'ajax',
+            url: $("base").attr('href')+'contribuyentes/ajax',
             dataType: 'json',
             data: 'estado_id=' + $(this).val() + '&band=select_estado',
             success: function(data) {
@@ -26,7 +26,7 @@ $(document).ready(function() {
     $("#municipio").change(function() {
         $.ajax({
             type: "POST",
-            url: 'ajax',
+            url: $("base").attr('href')+'contribuyentes/ajax',
             dataType: 'json',
             data: 'municipio_id=' + $(this).val() + '&band=select_municipio',
             success: function(data) {
