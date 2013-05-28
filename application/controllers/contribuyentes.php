@@ -23,10 +23,6 @@ class contribuyentes extends MY_Controller {
             $this->data['resultado'].= '<tr>';
             $this->data['resultado'].= '<th class="span1" style="text-align:center;">CI / RIF</th>';
             $this->data['resultado'].= '<th style="text-align:center;">Nombre / Dirección</th>';
-            $this->data['resultado'].= '<th class="span1" style="text-align:center;">Patentes</th>';
-            $this->data['resultado'].= '<th class="span1" style="text-align:center;">RIC</th>';
-            $this->data['resultado'].= '<th class="span1" style="text-align:center;">Inmuebles</th>';
-            $this->data['resultado'].= '<th class="span1" style="text-align:center;">Vehículos</th>';
             $this->data['resultado'].= '<th class="span1" style="text-align:center;">Status</th>';
             $this->data['resultado'].= '</tr>';
             $this->data['resultado'].= '</thead>';
@@ -35,13 +31,9 @@ class contribuyentes extends MY_Controller {
             if (count($rst) > 0) {
                 foreach ($rst as $k => $v) {
                     $this->data['resultado'].= '<tr>';
-                    $this->data['resultado'].= '<td style="text-align:center;">' . $v->cirif . '</td>';
+                    $this->data['resultado'].= '<td style="text-align:center;">' . anchor('contribuyentes/ver/' . $v->id, '<h5>' . $v->cirif . '</h5>', 'title="Ver información del contribuyente"') . '</td>';
                     $this->data['resultado'].= '<td><div>' . $v->nombre . '</div><div>' . $v->direccion . '</div></td>';
-                    $this->data['resultado'].= '<td style="text-align:center;"><span class="badge badge-info">8</span></td>';
-                    $this->data['resultado'].= '<td style="text-align:center;"><span class="badge badge-info">8</span></td>';
-                    $this->data['resultado'].= '<td style="text-align:center;"><span class="badge badge-info">8</span></td>';
-                    $this->data['resultado'].= '<td style="text-align:center;"><span class="badge badge-info">8</span></td>';
-                    $this->data['resultado'].= '<td style="text-align:center;"><span class="label label-success">Activo</span></td>';
+                    $this->data['resultado'].= '<td style="text-align:center;">' . status($v->status) . '</td>';
                     $this->data['resultado'].= '</tr>';
                 }
             }
@@ -83,7 +75,7 @@ class contribuyentes extends MY_Controller {
             }
         }
 
-        $this->data['title'] = 'Registro de nuevo contribuyente';
+        $this->data['title'] = 'Nuevo contribuyente';
 
         $this->data['options_estados'] = $this->Estados_model->select_estados();
         $this->data['options_municipios'] = (is_array($this->Municipios_model->select_municipios($this->input->post('estado')))) ? $this->Municipios_model->select_municipios($this->input->post('estado')) : array();
@@ -92,16 +84,15 @@ class contribuyentes extends MY_Controller {
         $this->template->load('basic', 'contribuyentes/registro', $this->data);
     }
 
-    public function edicion() {
+    public function editar() {
 
         $this->data['contribuyente'] = $this->Contribuyentes_model->get_contribuyente($this->uri->segment(3));
-        if ($this->data['contribuyente']==''){
+        if ($this->data['contribuyente'] == '') {
             redirect();
         }
 
         $this->load->helper('common');
         $this->load->library('form_validation');
-        $this->load->model('Contribuyentes_model');
         $this->load->model('Estados_model');
         $this->load->model('Municipios_model');
         $this->load->model('Parroquias_model');
@@ -135,7 +126,135 @@ class contribuyentes extends MY_Controller {
         $this->data['options_municipios'] = (is_array($this->Municipios_model->select_municipios($this->input->post('estado')))) ? $this->Municipios_model->select_municipios($this->input->post('estado')) : array();
         $this->data['options_parroquias'] = (is_array($this->Parroquias_model->select_parroquias($this->input->post('municipio')))) ? $this->Parroquias_model->select_parroquias($this->input->post('municipio')) : array();
 
-        $this->template->load('basic', 'contribuyentes/edicion', $this->data);
+        $this->template->load('basic', 'contribuyentes/editar', $this->data);
+    }
+
+    public function ver() {
+
+        $this->data['contribuyente'] = $this->Contribuyentes_model->get_contribuyente($this->uri->segment(3));
+        if ($this->data['contribuyente'] == '') {
+            redirect();
+        }
+
+        $this->load->helper('common');
+        $this->load->library('form_validation');
+        $this->load->model('Estados_model');
+        $this->load->model('Municipios_model');
+        $this->load->model('Parroquias_model');
+
+
+        $this->data['title'] = 'Datos del contribuyente';
+
+        $this->data['options_estados'] = $this->Estados_model->select_estados();
+        $this->data['options_municipios'] = $this->Municipios_model->select_municipios($this->data['contribuyente']->estado_id);
+        $this->data['options_parroquias'] = $this->Parroquias_model->select_parroquias($this->data['contribuyente']->municipio_id);
+
+        $this->template->load('basic', 'contribuyentes/ver', $this->data);
+    }
+
+    public function eliminar() {
+        $this->data['contribuyente'] = $this->Contribuyentes_model->get_contribuyente($this->uri->segment(3));
+        if ($this->data['contribuyente'] == '') {
+            redirect();
+        }
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_error_delimiters('<div class="alert alert-block">', '</div>');
+        $this->form_validation->set_message('required', 'Campo obligatorio');
+        $this->form_validation->set_rules('contribuyente_id', '', 'trim|required|numeric');
+        $this->form_validation->set_rules('observacion', '', 'trim|required');
+        if ($this->form_validation->run() == TRUE) {
+            if ($this->Contribuyentes_model->delete($this->input->post())) {
+                log_message('info', 'El contribuyente ha cambiado su status a eliminado');
+                $this->session->set_flashdata('msj', '<div class="alert alert-success"><button data-dismiss="alert" class="close" type="button">×</button><strong class="text-success">¡Éxito!</strong> El contribuyente ha sido eliminado.</div>');
+            } else {
+                log_message('error', 'Error al intentar cambiar el status del contribuyente a eliminado.');
+                $this->session->set_flashdata('msj', '<div class="alert alert-error"><button data-dismiss="alert" class="close" type="button">×</button><strong class="text-success">¡Error!</strong> Imposible eliminar el contribuyente.</div>');
+            }
+            redirect('contribuyentes');
+        }
+
+
+        $this->load->helper('common');
+        $this->load->library('form_validation');
+        $this->load->model('Estados_model');
+        $this->load->model('Municipios_model');
+        $this->load->model('Parroquias_model');
+        $this->data['title'] = 'Eliminar contribuyente';
+
+        $this->data['options_estados'] = $this->Estados_model->select_estados();
+        $this->data['options_municipios'] = $this->Municipios_model->select_municipios($this->data['contribuyente']->estado_id);
+        $this->data['options_parroquias'] = $this->Parroquias_model->select_parroquias($this->data['contribuyente']->municipio_id);
+
+        $this->template->load('basic', 'contribuyentes/eliminar', $this->data);
+    }
+
+    public function activar() {
+        $this->data['contribuyente'] = $this->Contribuyentes_model->get_contribuyente($this->uri->segment(3));
+        if ($this->data['contribuyente'] == '') {
+            redirect();
+        }
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('contribuyente_id', '', 'trim|required|numeric');
+        if ($this->form_validation->run() == TRUE) {
+            if ($this->Contribuyentes_model->active($this->input->post())) {
+                log_message('info', 'El contribuyente ha cambiado su status a activo');
+                $this->session->set_flashdata('msj', '<div class="alert alert-success"><button data-dismiss="alert" class="close" type="button">×</button><strong class="text-success">¡Éxito!</strong> El contribuyente ha sido activado.</div>');
+            } else {
+                log_message('error', 'Error al intentar cambiar el status del contribuyente a activo.');
+                $this->session->set_flashdata('msj', '<div class="alert alert-error"><button data-dismiss="alert" class="close" type="button">×</button><strong class="text-success">¡Error!</strong> Imposible activar el contribuyente.</div>');
+            }
+            redirect('contribuyentes');
+        }
+
+
+        $this->load->helper('common');
+        $this->load->library('form_validation');
+        $this->load->model('Estados_model');
+        $this->load->model('Municipios_model');
+        $this->load->model('Parroquias_model');
+        $this->data['title'] = 'Activar contribuyente';
+
+        $this->data['options_estados'] = $this->Estados_model->select_estados();
+        $this->data['options_municipios'] = $this->Municipios_model->select_municipios($this->data['contribuyente']->estado_id);
+        $this->data['options_parroquias'] = $this->Parroquias_model->select_parroquias($this->data['contribuyente']->municipio_id);
+
+        $this->template->load('basic', 'contribuyentes/activar', $this->data);
+    }
+
+    public function suspender() {
+        $this->data['contribuyente'] = $this->Contribuyentes_model->get_contribuyente($this->uri->segment(3));
+        if ($this->data['contribuyente'] == '') {
+            redirect();
+        }
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('contribuyente_id', '', 'trim|required|numeric');
+        if ($this->form_validation->run() == TRUE) {
+            if ($this->Contribuyentes_model->suspend($this->input->post())) {
+                log_message('info', 'El contribuyente ha cambiado su status a suspendido');
+                $this->session->set_flashdata('msj', '<div class="alert alert-success"><button data-dismiss="alert" class="close" type="button">×</button><strong class="text-success">¡Éxito!</strong> El contribuyente ha sido suspendido.</div>');
+            } else {
+                log_message('error', 'Error al intentar cambiar el status del contribuyente a suspendido.');
+                $this->session->set_flashdata('msj', '<div class="alert alert-error"><button data-dismiss="alert" class="close" type="button">×</button><strong class="text-success">¡Error!</strong> Imposible suspender el contribuyente.</div>');
+            }
+            redirect('contribuyentes');
+        }
+
+
+        $this->load->helper('common');
+        $this->load->library('form_validation');
+        $this->load->model('Estados_model');
+        $this->load->model('Municipios_model');
+        $this->load->model('Parroquias_model');
+        $this->data['title'] = 'Activar contribuyente';
+
+        $this->data['options_estados'] = $this->Estados_model->select_estados();
+        $this->data['options_municipios'] = $this->Municipios_model->select_municipios($this->data['contribuyente']->estado_id);
+        $this->data['options_parroquias'] = $this->Parroquias_model->select_parroquias($this->data['contribuyente']->municipio_id);
+
+        $this->template->load('basic', 'contribuyentes/suspender', $this->data);
     }
 
     public function ajax() {

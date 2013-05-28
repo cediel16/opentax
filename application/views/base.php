@@ -35,7 +35,7 @@
                                     <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">Contribuyentes <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         <li><?php echo anchor('contribuyentes', 'Busqueda') ?></li>
-                                        <li><?php echo anchor('contribuyentes/registro', 'Nuevo registro') ?></li>
+                                        <li><?php echo anchor('contribuyentes/registro', 'Nuevo contribuyente') ?></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">

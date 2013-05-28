@@ -18,7 +18,7 @@ $criterio = array(
     'value' => $this->input->post('criterio')
 );
 ?>
-
+<?php echo $this->session->flashdata('msj') ?>
 <?php echo form_open() ?>
 <div class="row-fluid">
     <div class="span12">

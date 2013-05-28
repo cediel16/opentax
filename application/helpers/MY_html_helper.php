@@ -59,6 +59,42 @@ if (!function_exists('link_tag')) {
 
 }
 
+if (!function_exists('label')) {
+
+    function label($type, $text) {
+        if ($type != '') {
+            $type = 'label-' . $type;
+        }
+        return '<span class="label ' . $type . '">' . $text . '</span>';
+    }
+
+}
+
+if (!function_exists('status')) {
+
+    function status($status) {
+        switch ($status) {
+            case 'activo':
+                $type = 'success';
+                break;
+            case 'eliminado':
+                $type = 'inverse';
+                break;
+            case 'suspendido':
+                $type = 'warning';
+                break;
+            default:
+                $type = '';
+                break;
+        }
+
+        return label($type, ucfirst($status));
+    }
+
+}
+
+
+
 
 /* End of file MY_html_helper.php */
 /* Location: ./application/helpers/MY_html_helper.php */

@@ -40,7 +40,8 @@ CREATE TABLE contribuyentes (
     parroquia_fkey integer NOT NULL,
     email character varying(50) NOT NULL,
     telefono1 character varying(20) NOT NULL,
-    telefono2 character varying(20) NOT NULL
+    telefono2 character varying(20) NOT NULL,
+    status character varying(20) DEFAULT 'activo'::character varying NOT NULL
 );
 
 
@@ -169,6 +170,43 @@ ALTER SEQUENCE parroquias_id_seq OWNED BY parroquias.id;
 
 
 --
+-- Name: status_contribuyentes; Type: TABLE; Schema: public; Owner: johel; Tablespace: 
+--
+
+CREATE TABLE status_contribuyentes (
+    id integer NOT NULL,
+    contribuyente_fkey integer NOT NULL,
+    status character varying(20) NOT NULL,
+    observacion text NOT NULL,
+    "timestamp" integer NOT NULL,
+    usuario_fkey integer NOT NULL
+);
+
+
+ALTER TABLE public.status_contribuyentes OWNER TO johel;
+
+--
+-- Name: status_contribuyentes_id_seq; Type: SEQUENCE; Schema: public; Owner: johel
+--
+
+CREATE SEQUENCE status_contribuyentes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.status_contribuyentes_id_seq OWNER TO johel;
+
+--
+-- Name: status_contribuyentes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: johel
+--
+
+ALTER SEQUENCE status_contribuyentes_id_seq OWNED BY status_contribuyentes.id;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: johel
 --
 
@@ -197,19 +235,26 @@ ALTER TABLE ONLY parroquias ALTER COLUMN id SET DEFAULT nextval('parroquias_id_s
 
 
 --
+-- Name: id; Type: DEFAULT; Schema: public; Owner: johel
+--
+
+ALTER TABLE ONLY status_contribuyentes ALTER COLUMN id SET DEFAULT nextval('status_contribuyentes_id_seq'::regclass);
+
+
+--
 -- Data for Name: contribuyentes; Type: TABLE DATA; Schema: public; Owner: johel
 --
 
-COPY contribuyentes (id, cirif, nombre, direccion, parroquia_fkey, email, telefono1, telefono2) FROM stdin;
-1	asdasdasd	asdasd	asdasda	4	asdasd	asdasd	asd
-2	asdasdasd	asdasd	asdasda	4	asdasd	asdasd	asd
-3	dds	asdasd	asdasda	4	asdasd	asdasd	asd
-4	ddsasdadasd	asdasd	asdasda	4	asdasd	asdasd	asd
-5	ddsasdadasd	asdasd	asdasda	4	asdasd	asdasd	asd
-6	ddsasdadasd	asdasd	asdasda	4	asdasd	asdasd	asd
-7	asdas	a sdasd	asdasd	4	asdasd	asdasd	asda
-8	V017515094	Johel Alexander Cediel Teran	Flor Amarillo	9	cedielj@alcaldiadeguacara.gob.ve	02418782490	04264300086
-9	V019000650	Jolibert Carolina Cediel Teran	Araguita	9	admin@localhost.com	02418782490	04264300086
+COPY contribuyentes (id, cirif, nombre, direccion, parroquia_fkey, email, telefono1, telefono2, status) FROM stdin;
+9	V019000650	Jolibert Carolina Cediel Teran	Araguita	9	admin@localhost.com	02418782490	04264300086	activo
+7	asdas	a sdasd	asdasd	4	asdasd	asdasd	asda	activo
+5	ddsasdadasd	asdasd	asdasda	4	asdasd	asdasd	asd	activo
+4	ddsasdadasd	asdasd	asdasda	4	asdasd	asdasd	asd	activo
+1	asdasdasd	asdasd	asdasda	4	asdasd	asdasd	asd	eliminado
+8	V017515094	Johel Alexander Cediel Teran	Flor Amarillo	9	cedielj@alcaldiadeguacara.gob.ve	02418782490	04264300086	eliminado
+6	ddsasdadasd	asdasd	asdasda	4	asdasd	asdasd	asd	activo
+3	dds	asdasd	asdasda	4	asdasd	asdasd	asd	suspendido
+2	asdasdasd	asdasd	asdasda	4	asdasd	asdasd	asd	activo
 \.
 
 
@@ -315,6 +360,26 @@ SELECT pg_catalog.setval('parroquias_id_seq', 11, true);
 
 
 --
+-- Data for Name: status_contribuyentes; Type: TABLE DATA; Schema: public; Owner: johel
+--
+
+COPY status_contribuyentes (id, contribuyente_fkey, status, observacion, "timestamp", usuario_fkey) FROM stdin;
+1	8	eliminado	fffffffffffffffff	1369702496	0
+2	6	activo	6	1369702715	0
+3	3	suspendido	3	1369702836	0
+4	3	suspendido	zzzzzzzzzzzzzzzzzzz	1369702932	0
+5	2	activo	asdasdasssssssssssssssssssssssssssssssss	1369702949	0
+\.
+
+
+--
+-- Name: status_contribuyentes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: johel
+--
+
+SELECT pg_catalog.setval('status_contribuyentes_id_seq', 5, true);
+
+
+--
 -- Name: contribuyentes_pkey; Type: CONSTRAINT; Schema: public; Owner: johel; Tablespace: 
 --
 
@@ -355,6 +420,14 @@ ALTER TABLE ONLY parroquias
 
 
 --
+-- Name: status_contribuyentes_pkey; Type: CONSTRAINT; Schema: public; Owner: johel; Tablespace: 
+--
+
+ALTER TABLE ONLY status_contribuyentes
+    ADD CONSTRAINT status_contribuyentes_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: contribuyentes_parroquia_fkey_fkey; Type: FK CONSTRAINT; Schema: public; Owner: johel
 --
 
@@ -376,6 +449,14 @@ ALTER TABLE ONLY municipios
 
 ALTER TABLE ONLY parroquias
     ADD CONSTRAINT parroquias_municipio_fkey_fkey FOREIGN KEY (municipio_fkey) REFERENCES municipios(id);
+
+
+--
+-- Name: status_contribuyentes_contribuyente_fkey_fkey; Type: FK CONSTRAINT; Schema: public; Owner: johel
+--
+
+ALTER TABLE ONLY status_contribuyentes
+    ADD CONSTRAINT status_contribuyentes_contribuyente_fkey_fkey FOREIGN KEY (contribuyente_fkey) REFERENCES contribuyentes(id);
 
 
 --
